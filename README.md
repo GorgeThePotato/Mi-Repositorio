@@ -4,7 +4,7 @@ En este espacio experimentaré con github
 
 Todavía no manejo ningún lenguaje de código.
 
-#Redes Sociales
+# Redes Sociales #
 
 Mi cuenta de [Twitter](https://twitter.com/LeoLamePlatos)
 
