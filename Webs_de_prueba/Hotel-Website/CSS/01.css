@@ -1,0 +1,152 @@
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Main style */
+
+html, body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 16px;
+  line-height: 1.7em;
+}
+
+a {
+  color: #333;
+  text-decoration: none;
+}
+
+h1, h2, h3 {
+  padding-bottom: 20px;
+}
+
+p {
+  margin: 10px 0;
+}
+
+/* Helper class */
+
+.bg-dark {
+  background-color: #333;
+  color: #f2f2f2;
+}
+
+.btn {
+  background-color: #333;
+  color: #f2f2f2;
+  padding: 15px 20px;
+  font-size: 18px;
+}
+
+.btn-light {
+  background-color: #f2f2f2;
+  color: #333;
+}
+
+.box {
+  text-align: center;
+  padding: 20px;
+  width: 33.333333%;
+  /* display: inline-block; */
+}
+
+.box-primary {
+  background-color: #f7c08a;
+}
+
+.fl-l {
+  float: left;
+}
+
+.fl-r {
+  float: right;
+}
+
+.clear {
+  clear: both;
+}
+
+/* Navigation */
+
+#navbar {
+  padding: 20px 0;
+}
+
+#navbar a {
+  color: #f2f2f2;
+}
+
+#navbar ul li {
+  display: inline-block;
+  margin-right: 25px;
+}
+
+#navbar ul {
+  float: right;
+}
+
+.logo {
+  width: 20%;
+  display: inline-block;
+  line-height: 0px;
+  margin-left: 25px;
+}
+
+/* SHOW CASE */
+
+#showcase {
+  height: 600px;
+  background-image: url(/Ejercicios/Hotel-Website/img/showcase.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.showcase-content {
+  text-align: center;
+  padding: 170px 50px;
+  color: #f2f2f2;
+}
+
+.showcase-content h1 {
+  font-size: 60px;
+  line-height: 1.2em;
+}
+
+.showcase-content p {
+  padding: 0 50px 50px 50px;
+  line-height: 1.5em;
+}
+
+/* Home info*/
+#home-info {
+  height: 400px;
+}
+
+.info-img {
+  background: url(/Ejercicios/Hotel-Website/img/photo-1.jpg) no-repeat center/cover red;
+  height: 100%;
+  width: 50%;
+  display: inline-block;
+}
+
+#home-info article {
+  width: 49%;
+  display: inline-block;
+  text-align: center;
+  overflow: hidden;
+  height: 100%;
+  padding: 80px 30px;
+}
+
+#home-info article p {
+  padding-bottom: 50px;
+}
+
+/* Footer */
+#main-footer {
+  text-align: center;
+  padding: 10px;
+}
