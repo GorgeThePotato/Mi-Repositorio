@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Weather Demo</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    <link href="main.css" rel="stylesheet" id="bootstrap-css">
+</head>
+
+<body>
+    
+        <div class="container hidden">
+            <div class="row">
+                <div class="col">
+                    <div class="weather-card one">
+                        <div class="top">
+                            <div class="wrapper">
+                                <h1 class="heading">XXX</h1>
+                                <h3 class="location">XXX</h3>
+                                <p class="temp">
+                                    <span class="temp-value">XX</span>
+                                    <span class="deg">0</span>
+                                    <a href="javascript:;"><span class="temp-type">C</span></a>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="bottom">
+                            <div class="wrapper">
+                                <ul class="forecast mt-4">
+                                    <li>
+                                        <span class="date">
+                                                <i class="fas fa-tint"></i> Humedad
+                                        </span>
+                                        <span class="lnr condition">
+                                            <span class="temp"><span class="humidity">XX</span><span class="temp-type"> %</span></span>
+                                        </span>
+                                    </li>
+                                    <li>
+                                        <span class="date">
+                                                <i class="fas fa-wind"></i> Viento
+                                        </span>
+                                        <span class="lnr condition">
+                                            <span class="temp"><span class="wind-speed">XX</span><span class="temp-type"> m/s</span></span>
+                                        </span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+        <script>
+
+           
+        async function init(){
+            const apiKey = "3408896f1d019f9845f9f0726d4dab41"
+            const city = "cordoba,es"
+            const units = "metric"
+            const lang = "es" 
+            const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=${units}&lang=${lang}`
+
+            const response = await fetch(url)
+            const data = await response.json()
+
+            const temperature = document.querySelector(".temp-value")
+            const humidity = document.querySelector(".humidity")
+            const heading = document.querySelector(".heading")
+            const location = document.querySelector(".location")
+            const wind = document.querySelector(".wind-speed")
+            temperature.innerHTML = Math.ceil(data.main.temp)
+            humidity.innerHTML = data.main.humidity
+            heading.innerHTML = data.name
+            location.innerHTML = data.weather[0].description
+            wind.innerHTML = data.wind.speed
+
+
+            const container = document.querySelector(".container")
+            container.classList.remove("hidden")
+
+            console.log(data)
+        }
+        init()
+        // setInterval(init, 1500)
+
+    
+        </script>
+
+        
+</body>
+</html>
