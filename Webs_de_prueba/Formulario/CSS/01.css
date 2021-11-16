@@ -1,0 +1,74 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 16px;
+  line-height: 1.4em;
+  background-color: rgba(53,74,114,255);
+}
+
+footer {
+  width: 100%;
+  color: #f2f2f2;
+  text-align: center;
+  margin-left: -65px;
+}
+
+a {
+  text-decoration: none;
+}
+
+h1 {
+  text-align: center;
+  font-weight:450;
+  margin-bottom: 10px;
+}
+
+input {
+  width: 100%;
+  margin: 5px 0 5px;
+  padding: 5px;
+  border: grey 1px solid;
+  border-radius: 5px;
+}
+
+.box {
+  width: 400px;
+  background-color: #f2f2f2;
+  border: 1px solid #333;
+  padding: 20px;
+  margin: 50px auto;
+  margin-bottom: -1px;
+}
+
+.head p {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.input-text {
+  font-weight:normal;
+  text-transform:capitalize;
+}
+
+.btn {
+  background-color:rgba(74,192,161,255);
+  border: 1px solid #333;
+  text-align: center;
+  padding: 10px 15px;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.policy {
+  text-align: center;
+  margin-top: 5px;
+}
+
+/* al meter todo en el mismo main, el footer lo alineamos a la izquierda */
+
+/* Para añadir características a elementos dentro de clases hay que emplear .class>elemnto */

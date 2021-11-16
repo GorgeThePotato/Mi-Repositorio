@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Form Styling</title>
+  <link rel="stylesheet" href="css/01.css">
+</head>
+<body>
+  
+  <div class="box" id="box-1">
+    <header class="head">
+      <h1>Sign Up</h1>
+      <p>It's free and only takes a minute</p>
+    </header>
+      <!-- Al ser un formulario <form> -->
+    <div>
+      <h4 class="input-text">First name</h4>
+      <label for="name"></label>
+      <input type="text" name="firstName" id="name" required value="">
+    </div>
+
+    <div>
+      <h4 class="input-text">Last name</h4>
+      <label for="name"></label>
+      <input type="text" name="lastName" id="surname" required value="">
+    </div>
+
+    <div>
+      <h4 class="input-text">Email</h4>
+      <label for="name"></label>
+      <input type="email" name="email" id="email"  required>
+    </div>
+    <div>
+      <label for="password">Password</label> <br>
+     <input type="password" name="password" id="password">
+    </div>
+
+    <div>
+      <label for="password">Confirm Password</label> <br>
+     <input type="password" name="confirm_password" id="confirm_password">
+    </div>
+
+    <button type="submit"class="btn">Sign up</button>
+    <p class="policy">By clicking the Sing Up button, you agree to our <a href="#">Terms & Conditions</a> and <a href="#">Privacy Policy</a></p>
+  </div>
+
+  <footer>
+    <p>Already have an account? <a href="#">Login Here</a></p>
+  </footer>
+
+</body>
+</html>
