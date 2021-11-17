@@ -1,0 +1,21 @@
+{
+  "name": "jorge-rodriguez-perez",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Jorge",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^6.0.12",
+    "uuidv4": "^6.2.12"
+  },
+  "devDependencies": {
+    "dotenv": "^10.0.0",
+    "nodemon": "^2.0.15"
+  },
+  "scripts": {
+    "dev": "NODE_ENV=development CHOKIDAR_USEPOLLING=true nodemon index"
+  }
+}
+
