@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "ansi-regex": "^5.0.1",
+    "buefy": "^0.9.13",
     "core-js": "^3.6.5",
     "glob-parent": "^5.1.2",
     "nth-check": "^2.0.1",
