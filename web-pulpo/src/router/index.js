@@ -20,6 +20,8 @@ import UpdateSlots from '../views/UpdateSlots.vue'
 import UpdateCredentials from '../views/UpdateCredentials.vue'
 import Referrals from '../views/Referrals.vue'
 import UpdatePrice from '../views/UpdatePrice.vue'
+import EmailSignup from '../views/EmailSignup.vue'
+
 
 Vue.use(VueRouter)
 
@@ -33,6 +35,7 @@ const routes = [
   {path: '/update-price/:id', name: 'Update_price', component: UpdatePrice},
   {path: '/update-credentials/:id', name: 'Update_credentials', component: UpdateCredentials},
   {path: '/register', name: 'Register', component: Register},
+  {path: '/email-signup', name: 'Email_signup', component: EmailSignup},
   {path: '/login', name: 'Login', component: Login},
   {path: '/forgot-password', name: 'ForgotPassword', component: ForgotPassword},
   {path: '/group/:id', name: 'Group_view', component: GroupViewPage},

@@ -22,7 +22,7 @@
                 <button class="button is-info">Registro con Facebook</button>
               </div>
               <div>
-                <button class="button is-dark">Registro con Email</button>
+                <button class="button is-dark" @click="gotToRegisterPage">Registro con Email</button>
               </div>
         </form>
         <footer>
@@ -38,8 +38,14 @@
 export default {
   name: 'Register',
   components: {
+  },
+  methods:{
+     gotToRegisterPage() {
+      this.$router.push("/email-signup");
+    },
   }
 }
+
 </script>
 
 <style scoped>
