@@ -1,6 +1,6 @@
 <template>
   <div>
-  <b-navbar class="is-dark">
+  <b-navbar class="is-light">
     <template #brand>
       <b-navbar-item tag="router-link" :to="{ path: '/' }">
         <img
@@ -31,10 +31,10 @@
       <b-navbar-item tag="div">
         <div class="buttons">
           <a class="button is-light" v-if="!hasSession" @click="goToRegisterPage">
-            Sign In
+            Registrarse
           </a>
           <a class="button is-light" v-if="!hasSession" @click="goToLoginPage">
-            Log in
+            Iniciar Sesión
           </a>
           </div>
       </b-navbar-item>
@@ -157,5 +157,9 @@ export default {
 
 .button.is-primary{
   width: 100%;
+}
+
+.navbar-item img {
+    max-height: 4.75rem;
 }
 </style>
