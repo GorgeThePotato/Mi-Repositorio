@@ -49,7 +49,7 @@
             </div>
 
             <div class="buttons">
-              <b-button type="is-primary" native-type="submit" expanded @click.prevent="createAccount">Registrarse</b-button>
+              <b-button type="is-primary" native-type="submit" expanded @click.prevent="() => {addUser(); createAccount();}">Registrarse</b-button>
             </div>
 
           </section>
@@ -64,7 +64,8 @@
 
 <script>
 
-import { Auth } from "@/modules/firebase"
+import { Auth, UsersRef } from "@/modules/firebase"
+
 
 export default {
   name: 'EmailSignup',
@@ -75,11 +76,35 @@ export default {
         name: "",
         surname: "",
         email: "",
-        password: ""
+        password: "",
+        role: "user",
+        active: true
       },
     };
   },
   methods: {
+     async addUser(){
+ 
+      const userInfo = {
+        name: this.userData.name,
+        surname: this.userData.surname,
+        email: this.userData.email,
+        password: this.userData.password,
+        created_at: new Date(),
+        role: this.userData.role,
+        active: this.userData.active
+      };
+
+      console.info(userInfo)
+
+      try{
+        const result = await UsersRef.add(userInfo)
+
+        console.info(result);
+      } catch(e){
+        console.error(e)
+      } 
+    },
     async createAccount() {
       this.formError = "";
 
@@ -98,6 +123,8 @@ export default {
           this.userData.email,
           this.userData.password
         );
+
+        this.$router.push('/')
 
       } catch (e) {
         this.formError = e.message;

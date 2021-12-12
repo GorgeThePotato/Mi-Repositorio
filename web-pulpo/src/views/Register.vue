@@ -16,17 +16,17 @@
         <form class="box">
           <h1 class="is-size-2">Regístrate</h1>
               <div>
-                <button class="button is-danger">Registro con Google</button>
+                <button class="button is-danger" @click.prevent="registerWithGoogle">Registro con Google</button>
               </div>
               <div>
-                <button class="button is-info">Registro con Facebook</button>
+                <button class="button is-info" @click.prevent="registerWithFacebook">Registro con Facebook</button>
               </div>
               <div>
-                <button class="button is-dark" @click="gotToRegisterPage">Registro con Email</button>
+                <button class="button is-dark" type="submit" @click="gotToRegisterPage">Registro con Email</button>
               </div>
         </form>
         <footer>
-          <h3>Al registrarme, acepto los <a href="">Términos y Condiciones de Pulpo</a></h3>
+          <h3>Al registrarme, acepto los <a @click="goToTermsPage">Términos y Condiciones de Pulpo</a></h3>
         </footer>
       </div>
     </div>
@@ -34,14 +34,57 @@
 </template>
 
 <script>
+import firebase from 'firebase/app'
+import "firebase/auth"
 
 export default {
   name: 'Register',
   components: {
   },
   methods:{
+    registerWithGoogle(){
+      const provider = new firebase.auth.GoogleAuthProvider();
+
+      firebase
+      .auth()
+      .signInWithPopup(provider)
+      .then((result) =>{
+        const credential = result.credential;
+        const user = result.user;
+        const token = credential.accessToken;
+        this.$router.push('/');
+      }).catch((error) =>{
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        const email = error.email;
+        const credential = error.credential
+      })
+    },
+    registerWithFacebook(){
+      const provider = new firebase.auth.FacebookAuthProvider();
+
+      firebase
+      .auth()
+      .signInWithPopup(provider)
+      .then((result) =>{
+        const credential = result.credential;
+        const user = result.user;
+        const token = credential.accessToken;
+        this.$router.push('/');
+      }).catch((error) =>{
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        const email = error.email;
+        const credential = error.credential
+      })
+    },
+    
+
      gotToRegisterPage() {
       this.$router.push("/email-signup");
+    },
+    goToTermsPage() {
+      this.$router.push("/terms");
     },
   }
 }

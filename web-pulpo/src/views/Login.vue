@@ -16,10 +16,10 @@
         <form class="box">
           <h1 class="is-size-2">Login</h1>
             <div>
-              <button class="button is-danger">Iniciar sesión con Google</button>
+              <button class="button is-danger" @click.prevent="registerWithGoogle">Iniciar sesión con Google</button>
             </div>
             <div>
-              <button class="button is-info">Iniciar sesión con Facebook</button>
+              <button class="button is-info" @click.prevent="registerWithFacebook">Iniciar sesión con Facebook</button>
             </div>
 
           <div class="separador"></div>
@@ -29,7 +29,7 @@
                 <b-field label="Email"
                   :type="{ 'is-danger': hasError }"
                   :message="{ 'Email incorrecto': hasError }">
-                  <b-input></b-input>
+                  <b-input v-model="user.username"></b-input>
                 </b-field>
 
                 <b-field label="Contraseña"
@@ -37,11 +37,11 @@
                   :message="[
                   { 'Contraseña incorrecta': hasError },
                   ]">
-                  <b-input type="password" maxlength="20"></b-input>
+                  <b-input type="password" maxlength="20" v-model="user.password"></b-input>
                 </b-field>
 
                 <div class="buttons">
-                  <b-button type="is-primary" native-type="submit" expanded>Registrarse</b-button>
+                  <b-button type="is-primary" native-type="submit" expanded @click.prevent="login">Entrar</b-button>
                 </div>
               </section>
           </template>
@@ -57,12 +57,78 @@
 </template>
 
 <script>
+import {Auth} from '@/modules/firebase'
+import firebase from 'firebase/app'
+import "firebase/auth"
 
 export default {
   name: 'Login',
-  components: {
+  data(){
+    return{
+      hasError: "",
+      user: {
+        username: "",
+        password: "",
+      },
+    }
   },
   methods:{
+      async login(){
+        if(this.user.username === ""){
+          this.hasError = "Debes introducir tu email"
+          return
+        }
+
+        if(this.user.password.length < 6){
+          this.hasError = "La contraseña debe tener al menos 6 caracteres"
+          return
+        }
+
+        try {
+          const response =  await Auth.signInWithEmailAndPassword(this.user.username,this.user.password)
+
+          this.$router.push('/')
+
+        }catch(e){
+          this.formError = e.message
+        }
+      },
+       registerWithGoogle(){
+      const provider = new firebase.auth.GoogleAuthProvider();
+
+      firebase
+      .auth()
+      .signInWithPopup(provider)
+      .then((result) =>{
+        const credential = result.credential;
+        const user = result.user;
+        const token = credential.accessToken;
+        this.$router.push('/');
+      }).catch((error) =>{
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        const email = error.email;
+        const credential = error.credential
+      })
+    },
+    registerWithFacebook(){
+      const provider = new firebase.auth.FacebookAuthProvider();
+
+      firebase
+      .auth()
+      .signInWithPopup(provider)
+      .then((result) =>{
+        const credential = result.credential;
+        const user = result.user;
+        const token = credential.accessToken;
+        this.$router.push('/');
+      }).catch((error) =>{
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        const email = error.email;
+        const credential = error.credential
+      })
+    },
       gotToRegisterPage() {
       this.$router.push("/email-signup");
     },
@@ -71,6 +137,7 @@ export default {
     },
   }
 }
+
 
 </script>
 
