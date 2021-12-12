@@ -1,6 +1,6 @@
 <template>
   <div>
-  <b-navbar class="transparent">
+  <b-navbar class="is-dark">
     <template #brand>
       <b-navbar-item tag="router-link" :to="{ path: '/' }">
         <img
@@ -10,26 +10,53 @@
       </b-navbar-item>
     </template>
     <template #start>
-      <b-navbar-item @click="goToQuestionsPage">
+      <b-navbar-item @click="goToQuestionsPage" v-if="!hasSession">
         Preguntas Frecuentes
-      </b-navbar-item>
-      <b-navbar-item @click="goToCreateGroupPage">
-        Crear Grupo
       </b-navbar-item>
     </template>
 
     <template #end>
-    <b-navbar-dropdown label="Hey" class="drop">
+       <b-navbar-item v-if="hasSession" @click.prevent="goToMyGroupsPage">
+        Mis grupos
+      </b-navbar-item>
+      <b-navbar-item v-if="hasSession" @click.prevent="goToDashboardPage">
+        Compartir
+      </b-navbar-item>
+      <b-navbar-item v-if="hasSession">
+        <a class="button is-light" v-if="hasSession" @click.prevent="goToCreateGroupPage">
+            Crear grupo
+        </a>
+      </b-navbar-item>
+     <b-navbar-dropdown label="Bienvenido" class="drop" v-if="!hasSession">
       <b-navbar-item tag="div">
         <div class="buttons">
-          <a class="button is-primary" v-if="!hasSession" @click="goToRegisterPage">
-            <strong>Sign up</strong>
+          <a class="button is-light" v-if="!hasSession" @click="goToRegisterPage">
+            Sign In
           </a>
           <a class="button is-light" v-if="!hasSession" @click="goToLoginPage">
             Log in
           </a>
+          </div>
+      </b-navbar-item>
+    </b-navbar-dropdown>
+
+    <b-navbar-dropdown label="Mi perfil" class="drop" v-if="hasSession">
+      <b-navbar-item tag="div">
+        <div class="buttons">
+          <a class="button is-light" v-if="hasSession" @click="goToSettings">
+            Ajustes
+          </a>
+          <a class="button is-light" v-if="hasSession" @click="goToWallet">
+            Wallet
+          </a>
+          <a class="button is-light" v-if="hasSession" @click="goToQuestionsPage">
+            Ayuda
+          </a>
+          <a class="button is-light" v-if="hasSession" @click="goToQuestionsPage">
+            FAQ
+          </a>
           <a class="button is-light" v-if="hasSession" @click.prevent="closeSession">
-            Log out
+            Cerrar Sesión
           </a>
         </div>
       </b-navbar-item>
@@ -81,6 +108,24 @@ export default {
      goToLoginPage(){
       this.$router.push("/login")
     },
+    goToSettings(){
+      this.$router.push("/settings")
+    },
+    goToWallet(){
+      this.$router.push("/wallet")
+    },
+    goToQuestionsPage() {
+      this.$router.push("/faq");
+    },
+     goToDashboardPage() {
+      this.$router.push("/dashboard");
+    },
+     goToMyGroupsPage() {
+      this.$router.push("/my-groups");
+    },
+    goToCreateGroupPage(){
+      this.$router.push("/create-group")
+    },
      async closeSession() {
       try {
         await Auth.signOut();
@@ -99,7 +144,18 @@ export default {
 <style scoped>
 
 .drop{
-  margin-right: 40px
+  margin-right: 57px
 }
 
+.buttons {
+  justify-content: center;
+}
+
+.button.is-light{
+  width: 100%;
+}
+
+.button.is-primary{
+  width: 100%;
+}
 </style>
