@@ -13,7 +13,7 @@
 
       <div class="collumns">
         <div class="column is-full has-text-centered" >
-            <h2 class="is-size-3" style="padding: 10px"><b>¿Con cuánta gente quieres compartir tu cuenta de ?</b></h2>
+            <h2 class="is-size-3" style="padding: 10px"><b>¿Con cuánta gente quieres compartir tu cuenta de {{platforms.title}}?</b></h2>
         
 
           <template>
@@ -33,7 +33,7 @@
           </div>
 
           <div class="buttons">
-            <b-button type="is-success" @click.prevent="platformInfo">Siguiente</b-button>
+            <b-button type="is-success">Siguiente</b-button>
           </div>
 
           <div class="content" style="padding: 10px">
@@ -51,7 +51,7 @@
 
 <script>
 
-import firebase from 'firebase/app'
+import {PlatformRef} from '@/modules/firebase'
 
 export default {
   name: 'UpdateSlots',
@@ -61,22 +61,11 @@ export default {
       currentPlatform: null,
     }
   },
-  methods:{
-    platformInfo(){
-      const dbRef = firebase.database().ref('platforms');
-      dbRef.get().then((snapshot) =>{
-        if(snapshot.exists()){
-          console.log(snapshot.val());
-        } else{
-          console.log("No data available");
-        }
-      }).catch((error) => {
-        console.error(error);
-      })
-     
-    },
-    
-  }
+  firestore() {
+    return{
+    platforms: PlatformRef
+    }
+  }, 
 }
 </script>
 

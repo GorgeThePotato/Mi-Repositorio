@@ -21,20 +21,10 @@
             </div>
           </div>
           <div class="columns is-full">
-            <div class="column is-one-fifth">
-              <b-button rounded size="is-large"><router-link to="/update-slots/spotify"><span style="color: green"><b>Spotify</b></span></router-link></b-button>
-            </div>
-            <div class="column is-one-fifth">
-              <b-button rounded size="is-large"><router-link to="/update-slots/netflix"><span style="color: red"><b>NETFLIX</b></span></router-link></b-button>
-            </div>
-            <div class="column is-one-fifth">
-             <b-button rounded size="is-large"><router-link to="/update-slots/hbomax"><span style="color: black"><b>HBOMax</b></span></router-link></b-button>
-            </div>
-            <div class="column is-one-fifth">
-              <b-button rounded size="is-large"><router-link to="/update-slots/disney"><span style="color: blue"><b>Disney +</b></span></router-link></b-button>
-            </div>
-             <div class="column is-one-fifth">
-              <b-button rounded size="is-large"><router-link to="/update-slots/atresplayerpremium"><span style="color: black"><b>Atresplayer</b></span><span style="color: red"><b>PREMIUM</b></span></router-link></b-button>
+            <div class="column is-half">
+              <div class="buttons">
+                <b-button rounded size="is-large" v-for="platforms in platforms" :key="platforms.id"><router-link :to="{name: 'Update_slots', params: {slug: platforms.slug}}"><span style="color: black"><b>{{platforms.title}}</b></span></router-link></b-button>
+              </div>
             </div>
           </div>
 
@@ -68,10 +58,18 @@
 
 <script>
 
+import {PlatformRef} from '@/modules/firebase'
+
 export default {
   name: 'SelectPlatform',
   data(){
     return {
+      platforms: [],
+    }
+  },
+  firestore() {
+    return{
+    platforms: PlatformRef
     }
   },
 }
@@ -86,5 +84,13 @@ export default {
 
 .columns{
   padding: 15px
+}
+
+.column.is-half{
+  width: 100%
+}
+
+.buttons {
+  justify-content: space-between;
 }
 </style>
