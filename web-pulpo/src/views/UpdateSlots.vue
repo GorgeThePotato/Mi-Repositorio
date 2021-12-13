@@ -13,7 +13,7 @@
 
       <div class="collumns">
         <div class="column is-full has-text-centered" >
-            <h2 class="is-size-3" style="padding: 10px"><b>¿Con cuánta gente quieres compartir tu cuenta de {{platforms.title}}?</b></h2>
+            <h2 class="is-size-3" style="padding: 10px"><b>¿Con cuánta gente quieres compartir tu cuenta de {{currentPlatform.title}}?</b></h2>
         
 
           <template>
@@ -28,12 +28,12 @@
 
           <div class="container" style="padding: 10px">
             <div>
-              <h2 class="is-size-5"><b>Cobrarás X$/mes</b></h2>
+              <h2 class="is-size-5"><b>Cobrarás {{currentPlatform.minprice}}€/mes</b></h2>
             </div>
           </div>
 
           <div class="buttons">
-            <b-button type="is-success">Siguiente</b-button>
+            <b-button type="is-success"><router-link style="text-decoration: none; color: inherit;" :to="{name: 'Update_price', params: {slug: currentPlatform.slug}}">Siguiente</router-link></b-button>
           </div>
 
           <div class="content" style="padding: 10px">
@@ -58,14 +58,19 @@ export default {
   data(){
     return{
       platforms: [],
-      currentPlatform: null,
+    }
+  },
+  computed: {
+    currentPlatform(){
+      const slug = this.$route.params.slug
+      return this.platforms.find(item => item.slug === slug)
     }
   },
   firestore() {
     return{
-    platforms: PlatformRef
+      platforms: PlatformRef
     }
-  }, 
+  },
 }
 </script>
 
