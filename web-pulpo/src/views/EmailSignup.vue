@@ -49,7 +49,7 @@
             </div>
 
             <div class="buttons">
-              <b-button type="is-primary" native-type="submit" expanded @click.prevent="() => {addUser(); createAccount();}">Registrarse</b-button>
+              <b-button type="is-primary" native-type="submit" expanded @click.prevent="createAccount">Registrarse</b-button>
             </div>
 
           </section>
@@ -83,7 +83,7 @@ export default {
     };
   },
   methods: {
-     async addUser(){
+     async addUser(uid){
  
       const userInfo = {
         name: this.userData.name,
@@ -98,8 +98,8 @@ export default {
       console.info(userInfo)
 
       try{
-        const result = await UsersRef.add(userInfo)
-
+        const result = await UsersRef.doc(uid).set(userInfo)
+        
         console.info(result);
       } catch(e){
         console.error(e)
@@ -123,6 +123,10 @@ export default {
           this.userData.email,
           this.userData.password
         );
+        
+        console.log(result)
+
+        this.addUser(result.user.uid)
 
         this.$router.push('/')
 

@@ -11,15 +11,15 @@
       </template>
     </b-navbar>
 
-      <div class="collumns">
+      <div class="columns" v-if="currentPlatform">
         <div class="column is-full has-text-centered" >
-            <h2 class="is-size-3" style="padding: 10px"><b>¿Con cuánta gente quieres compartir tu cuenta de {{currentPlatform.title}}?</b></h2>
+            <h2 class="is-size-3" style="padding: 10px"><b>¿Con cuánta gente quieres compartir tu cuenta de {{ currentPlatform.title }}?</b></h2>
         
 
           <template>
             <section>
               <b-field style="padding: 10px">
-                <b-numberinput controls-rounded size="is-large">
+                <b-numberinput controls-rounded size="is-large" v-model="qtyPerson" :max="currentPlatform.maxppl" min="1">
                 </b-numberinput>
               </b-field>
             </section>
@@ -28,12 +28,12 @@
 
           <div class="container" style="padding: 10px">
             <div>
-              <h2 class="is-size-5"><b>Cobrarás {{currentPlatform.minprice}}€/mes</b></h2>
+              <h2 class="is-size-5"><b>Cobrarás {{currentPlatform.minprice * qtyPerson}}€/mes</b></h2>
             </div>
           </div>
 
           <div class="buttons">
-            <b-button type="is-success"><router-link style="text-decoration: none; color: inherit;" :to="{name: 'Update_price', params: {slug: currentPlatform.slug}}">Siguiente</router-link></b-button>
+            <b-button type="is-success" @click.prevent="createGroup">Siguiente</b-button>
           </div>
 
           <div class="content" style="padding: 10px">
@@ -51,26 +51,56 @@
 
 <script>
 
-import {PlatformRef} from '@/modules/firebase'
+import {PlatformRef, GroupsRef, UsersRef} from '@/modules/firebase'
+import firebase from 'firebase/app'
+import "firebase/auth"
 
 export default {
   name: 'UpdateSlots',
   data(){
     return{
       platforms: [],
+      qtyPerson: 1,
     }
   },
   computed: {
     currentPlatform(){
-      const slug = this.$route.params.slug
-      return this.platforms.find(item => item.slug === slug)
-    }
+      return this.platforms[0]
+    },
   },
   firestore() {
     return{
-      platforms: PlatformRef
+      platforms: PlatformRef.where("slug", "==", this.$route.params.slug),
+      users: UsersRef,
+      groups: GroupsRef
     }
   },
+  methods:{
+    async createGroup(){
+      const user = firebase.auth().currentUser;
+      if(user !== null){
+        const email = user.email;
+        const uid = user.uid;
+        const totalPrice = (this.currentPlatform.minprice * this.qtyPerson)
+        const service = this.currentPlatform.title
+        const freeSpace = (this.currentPlatform.maxppl - this.qtyPerson)
+
+        const groups = {
+        platform: service,
+        totalPpl: this.qtyPerson,
+        totalPrice: totalPrice,
+        space: freeSpace,
+        adminInfo: {
+          id: uid,
+          email: email
+        }
+      };
+      const result = await GroupsRef.add(groups)
+      // this.$router.push("/update-price", groups.id)
+
+    }
+    }
+  }
 }
 </script>
 

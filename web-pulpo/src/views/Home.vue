@@ -63,6 +63,55 @@
     </b-navbar-dropdown>
     </template>
   </b-navbar>
+
+  <div class="columns is-mobile">
+    <div class="column is-three-fifths is-offset-one-fifth">
+        <div class="box">
+          <section  style="padding: 10px">
+            <p class="content is-large"><h1 class="content is-large"><b>¿En qué quieres ahorrar?</b></h1><p>{{ selected }}</p>
+            <b-field>
+              <b-autocomplete
+                  rounded
+                  v-model="name"
+                  :data="filteredDataArray"
+                  placeholder="Buscar plataforma"
+                  icon="magnify"
+                  clearable
+                  @select="option => selected = option">
+                  <template #empty>No results found</template>
+              </b-autocomplete>
+            </b-field>
+          </section>
+        </div>
+
+        <section style="margin-top 15px, margin-bottom: 15px">
+          <div class="columns is full">
+           <div class="column is-one-fifth">
+              <b-button rounded size="is-large">Streaming</b-button>
+            </div>
+            <div class="column is-one-fifth">
+              <b-button rounded size="is-large">Música</b-button>
+            </div>
+            <div class="column is-one-fifth">
+             <b-button rounded size="is-large">Fitness</b-button>
+            </div>
+            <div class="column is-one-fifth">
+              <b-button rounded size="is-large">Noticias</b-button>
+            </div>
+             <div class="column is-one-fifth">
+              <b-button rounded size="is-large">Gaming</b-button>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <div class="box">
+            <p class="content is-large"><h1 class="content is-large"><b>Grupos compartidos</b></h1>
+          </div>
+        </section>
+    </div>
+  </div>
+
   </div>
 </template>
 
@@ -76,7 +125,16 @@ export default {
     hasSession: {
       type: Boolean,
       default: false
-    }
+    },
+    data: [
+      'Netflix',
+      'Disney +',
+      'HBO Max',
+      'Atresplayer',
+      'Spotify'               
+    ],
+    name: '',
+    selected: null      
     }
   },
    mounted() {
@@ -94,6 +152,16 @@ export default {
         }
       }
     });
+  },
+  computed: {
+    filteredDataArray() {
+      return this.data.filter((option) => {
+      return option
+      .toString()
+      .toLowerCase()
+      .indexOf(this.name.toLowerCase()) >= 0
+    })
+    }
   },
   methods:{
     goToQuestionsPage(){
@@ -143,6 +211,14 @@ export default {
 
 <style scoped>
 
+h1{
+  margin-bottom: 20px;
+}
+
+section{
+  margin-top: 20px;
+}
+
 .drop{
   margin-right: 57px
 }
@@ -161,5 +237,10 @@ export default {
 
 .navbar-item img {
     max-height: 4.75rem;
+}
+
+.columns{
+  margin-top: 15px;
+  margin-bottom: 15px;
 }
 </style>

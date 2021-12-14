@@ -18,15 +18,15 @@
         
           <div class="container" style="padding: 10px">
             <div>
-              <h2 class="is-size-4"><b>{{currentPlatform.minprice}}€</b></h2>
-              <h3>Con {{currentPlatform.maxppl}} miembros</h3>
-              <h3>Total 3 miembros: {{currentPlatform.minprice}}€/mes</h3>
+              <h2 class="is-size-4"><b>€</b></h2>
+              <h3>Con  miembros</h3>
+              <h3>Total  miembros: €/mes</h3>
             </div>
           </div>
 
           <div class="buttons">
-            <b-button type="is-success">Crear</b-button>
-             <b-button type="is-warning"><router-link style="text-decoration: none; color: inherit;" :to="{name: 'Update_slots', params: {slug: currentPlatform.slug}}">Cambiar</router-link></b-button>
+            <b-button type="is-success">Continuar</b-button>
+             <b-button type="is-warning">Cambiar</b-button>
           </div>
 
         </div>
@@ -36,25 +36,23 @@
 
 <script>
 
-import {PlatformRef} from '@/modules/firebase'
+import {GroupsRef} from '@/modules/firebase'
+import firebase from 'firebase/app'
+import "firebase/auth"
 
 export default {
   name: 'UpdateSlots',
   data(){
     return{
       platforms: [],
+      group: null,
+      groupId: null
     }
   },
-  computed: {
-    currentPlatform(){
-      const slug = this.$route.params.slug
-      return this.platforms.find(item => item.slug === slug)
-    }
-  },
-  firestore() {
-    return{
-      platforms: PlatformRef
-    }
+  async mounted(){
+    this.groupId = this.$route.params.slug
+    const group = await GroupsRef.doc(this.groupId).get()
+    this.group = group.data()
   },
 }
 </script>

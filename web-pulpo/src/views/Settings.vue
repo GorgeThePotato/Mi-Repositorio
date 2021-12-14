@@ -67,8 +67,45 @@
     <div class="columns">
       <div class="column is-three-fifths is-offset-one-fifth">
         <div class="box">
-            
+          <h1 class="is-size-5"><b>Datos Personales</b></h1>
+          <b-table>
+            <tr>           
+              <td><b>Nombre</b></td>
+              <td>Jorge</td>
+              <td><b-button rounded size="is-small">Editar</b-button></td>
+            </tr>
+            <tr>
+              <td><b>Apellido</b></td>
+              <td>Rodríguez Pérez</td>
+              <td><b-button rounded size="is-small">Editar</b-button></td>
+            </tr>
+            <tr>
+              <td><b>Email</b></td>
+              <td>perez.jorge.rodriguez@gmail.com</td>
+            </tr>
+            <tr>
+              <td><b>Contraseña</b></td>
+              <td>holahola122</td>
+              <td><b-button rounded size="is-small">Editar</b-button></td>
+            </tr>
+          </b-table>
         </div>
+        <div class="box">
+          <h1 class="is-size-5"><b>Métodos de pago</b></h1>
+          <div class="buttons">
+            <b-button rounded  type="is-success">Añadir nuevo</b-button>
+          </div>
+        </div>
+        <div class="box">
+          <h1 class="is-size-5"><b>Datos de pago</b></h1>
+          <h1 class="is-size-6">Añade tus datos bancarios para poder cobrar</h1>
+          <div class="buttons">
+            <b-button rounded  type="is-success">Añadir datos de pago</b-button>
+          </div>
+        </div>
+        <div class="buttons">
+            <b-button rounded size="is-medium" type="is-light" label="Eliminar cuenta" @click="confirmCustomDelete"></b-button>
+          </div>
       </div>
     </div>
 
@@ -76,7 +113,9 @@
 </template>
 
 <script>
-import {Auth} from '@/modules/firebase';
+import {Auth, UsersRef} from '@/modules/firebase';
+import firebase from 'firebase/app'
+import "firebase/auth"
 
 export default {
   name: "Header",
@@ -85,7 +124,7 @@ export default {
     hasSession: {
       type: Boolean,
       default: false
-    }
+    },
     }
   },
    mounted() {
@@ -103,6 +142,11 @@ export default {
         }
       }
     });
+  },
+  firestore(){
+    return{
+    users: UsersRef
+    }
   },
   methods:{
     goToQuestionsPage(){
@@ -145,12 +189,38 @@ export default {
         console.error(e.message);
       }
     },
+    confirmCustomDelete() {
+      this.$buefy.dialog.confirm({
+      title: 'Eliminar cuenta',
+      message: '¿Estás seguro de que quieres <b>eliminar</b> tu cuenta? Esta acción no es reversible.',
+      confirmText: 'Eliminar cuenta',
+      type: 'is-danger',
+      hasIcon: true,
+      onConfirm: () => {
+      const user = firebase.auth().currentUser;
+      user.delete().then(() => {
+       this.$router.push("/")
+      }).catch((error) => {
+      console.log(error)
+      }); 
+      }
+    })
+    }
   }
 };
 
 </script>
 
 <style scoped>
+
+h1{
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+td{
+  padding: 20px;
+}
 
 .drop{
   margin-right: 57px
