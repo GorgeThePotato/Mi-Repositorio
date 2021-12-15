@@ -1,76 +1,76 @@
 <template>
   <div>
-  <b-navbar class="is-light">
-    <template #brand>
-      <b-navbar-item tag="router-link" :to="{ path: '/' }">
-        <img
-          src="https://cdn.pulpo.me/logo_apqcsv.png"
-          alt="Lightweight UI components for Vue.js based on Bulma"
-        >
-      </b-navbar-item>
-    </template>
-    <template #start>
-      <b-navbar-item @click="goToQuestionsPage" v-if="!hasSession">
-        Preguntas Frecuentes
-      </b-navbar-item>
-    </template>
+    <b-navbar class="is-light">
+      <template #brand>
+        <b-navbar-item tag="router-link" :to="{ path: '/' }">
+          <img
+            src="https://cdn.pulpo.me/logo_apqcsv.png"
+            alt="Lightweight UI components for Vue.js based on Bulma"
+          >
+        </b-navbar-item>
+      </template>
+      <template #start>
+        <b-navbar-item @click="goToQuestionsPage" v-if="!hasSession">
+          Preguntas Frecuentes
+        </b-navbar-item>
+      </template>
 
-    <template #end>
-       <b-navbar-item v-if="hasSession" @click.prevent="goToMyGroupsPage">
-        Mis grupos
-      </b-navbar-item>
-      <b-navbar-item v-if="hasSession" @click.prevent="goToDashboardPage">
-        Compartir
-      </b-navbar-item>
-      <b-navbar-item v-if="hasSession">
-        <a class="button is-light" v-if="hasSession" @click.prevent="goToCreateGroupPage">
+      <template #end>
+        <b-navbar-item v-if="hasSession" @click.prevent="goToMyGroupsPage">
+          Mis grupos
+        </b-navbar-item>
+        <b-navbar-item v-if="hasSession" @click.prevent="goToDashboardPage">
+          Compartir
+        </b-navbar-item>
+        <b-navbar-item v-if="hasSession">
+          <a class="button is-light" v-if="hasSession" @click.prevent="goToCreateGroupPage">
             Crear grupo
-        </a>
-      </b-navbar-item>
-     <b-navbar-dropdown label="Bienvenido" class="drop" v-if="!hasSession">
-      <b-navbar-item tag="div">
-        <div class="buttons">
-          <a class="button is-light" v-if="!hasSession" @click="goToRegisterPage">
-            Registrarse
           </a>
-          <a class="button is-light" v-if="!hasSession" @click="goToLoginPage">
-            Iniciar Sesión
-          </a>
-          </div>
-      </b-navbar-item>
-    </b-navbar-dropdown>
+        </b-navbar-item>
+        <b-navbar-dropdown label="Bienvenido" class="drop" v-if="!hasSession">
+          <b-navbar-item tag="div">
+            <div class="buttons">
+              <a class="button is-light" v-if="!hasSession" @click="goToRegisterPage">
+                Registrarse
+              </a>
+              <a class="button is-light" v-if="!hasSession" @click="goToLoginPage">
+                Iniciar Sesión
+              </a>
+            </div>
+          </b-navbar-item>
+        </b-navbar-dropdown>
 
-    <b-navbar-dropdown label="Mi perfil" class="drop" v-if="hasSession">
-      <b-navbar-item tag="div">
-        <div class="buttons">
-          <a class="button is-light" v-if="hasSession" @click="goToSettings">
-            Ajustes
-          </a>
-          <a class="button is-light" v-if="hasSession" @click="goToWallet">
-            Wallet
-          </a>
-          <a class="button is-light" v-if="hasSession" @click="goToQuestionsPage">
-            Ayuda
-          </a>
-          <a class="button is-light" v-if="hasSession" @click="goToQuestionsPage">
-            FAQ
-          </a>
-          <a class="button is-light" v-if="hasSession" @click.prevent="closeSession">
-            Cerrar Sesión
-          </a>
-        </div>
-      </b-navbar-item>
-    </b-navbar-dropdown>
-    </template>
-  </b-navbar>
+        <b-navbar-dropdown label="Mi perfil" class="drop" v-if="hasSession">
+          <b-navbar-item tag="div">
+            <div class="buttons">
+              <a class="button is-light" v-if="hasSession" @click="goToSettings">
+                Ajustes
+              </a>
+              <a class="button is-light" v-if="hasSession" @click="goToWallet">
+                Wallet
+              </a>
+              <a class="button is-light" v-if="hasSession" @click="goToQuestionsPage">
+                Ayuda
+              </a>
+              <a class="button is-light" v-if="hasSession" @click="goToQuestionsPage">
+                FAQ
+              </a>
+              <a class="button is-light" v-if="hasSession" @click.prevent="closeSession">
+              Cerrar Sesión
+              </a>
+            </div>
+          </b-navbar-item>
+        </b-navbar-dropdown>
+      </template>
+    </b-navbar>
 
-  <div class="columns is-mobile">
-    <div class="column is-three-fifths is-offset-one-fifth">
-        <div class="box">
-          <section  style="padding: 10px">
-            <p class="content is-large"><h1 class="content is-large"><b>¿En qué quieres ahorrar?</b></h1><p>{{ selected }}</p>
-            <b-field>
-              <b-autocomplete
+    <div class="columns is-mobile">
+      <div class="column is-three-fifths is-offset-one-fifth">
+          <div class="box">
+            <section  style="padding: 10px">
+              <p class="content is-large"><h1 class="content is-large"><b>¿En qué quieres ahorrar?</b></h1>
+              <b-field>
+                <b-autocomplete
                   rounded
                   v-model="name"
                   :data="filteredDataArray"
@@ -79,39 +79,39 @@
                   clearable
                   @select="option => selected = option">
                   <template #empty>No results found</template>
-              </b-autocomplete>
-            </b-field>
+                </b-autocomplete>
+              </b-field>
+            </section>
+          </div>
+
+          <section style="margin-top 15px, margin-bottom: 15px">
+            <div class="columns is full">
+              <div class="column is-one-fifth">
+                <b-button rounded size="is-large">
+                  Streaming</b-button>
+              </div>
+              <div class="column is-one-fifth">
+                <b-button rounded size="is-large">Música</b-button>
+              </div>
+              <div class="column is-one-fifth">
+              <b-button rounded size="is-large">Fitness</b-button>
+              </div>
+              <div class="column is-one-fifth">
+                <b-button rounded size="is-large">Noticias</b-button>
+              </div>
+              <div class="column is-one-fifth">
+                <b-button rounded size="is-large">Gaming</b-button>
+              </div>
+            </div>
+          </section>
+
+          <section>
+            <div class="box">
+              <p class="content is-large"><h1 class="content is-large"><b>Grupos compartidos</b></h1>
+            </div>
           </section>
         </div>
-
-        <section style="margin-top 15px, margin-bottom: 15px">
-          <div class="columns is full">
-           <div class="column is-one-fifth">
-              <b-button rounded size="is-large">Streaming</b-button>
-            </div>
-            <div class="column is-one-fifth">
-              <b-button rounded size="is-large">Música</b-button>
-            </div>
-            <div class="column is-one-fifth">
-             <b-button rounded size="is-large">Fitness</b-button>
-            </div>
-            <div class="column is-one-fifth">
-              <b-button rounded size="is-large">Noticias</b-button>
-            </div>
-             <div class="column is-one-fifth">
-              <b-button rounded size="is-large">Gaming</b-button>
-            </div>
-          </div>
-        </section>
-
-        <section>
-          <div class="box">
-            <p class="content is-large"><h1 class="content is-large"><b>Grupos compartidos</b></h1>
-          </div>
-        </section>
-    </div>
-  </div>
-
+      </div>
   </div>
 </template>
 

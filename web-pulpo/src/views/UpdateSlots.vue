@@ -61,6 +61,8 @@ export default {
     return{
       platforms: [],
       qtyPerson: 1,
+      group: null,
+      groupId: null
     }
   },
   computed: {
@@ -96,11 +98,11 @@ export default {
         }
       };
       const result = await GroupsRef.add(groups)
-      // this.$router.push("/update-price", groups.id)
-
+   
+      this.$router.push({ name: 'Update_price', params: { id: result.id} })
     }
     }
-  }
+  },
 }
 </script>
 

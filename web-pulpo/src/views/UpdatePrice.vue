@@ -18,14 +18,14 @@
         
           <div class="container" style="padding: 10px">
             <div>
-              <h2 class="is-size-4"><b>€</b></h2>
-              <h3>Con  miembros</h3>
-              <h3>Total  miembros: €/mes</h3>
+              <h2 class="is-size-4"><b>{{this.group.totalPrice / this.group.totalPpl}}€</b></h2>
+              <h3>Con {{this.group.totalPpl}} miembros</h3>
+              <h3>Total {{this.group.totalPpl}} miembros: {{this.group.totalPrice}} €/mes</h3>
             </div>
           </div>
 
           <div class="buttons">
-            <b-button type="is-success">Continuar</b-button>
+            <b-button type="is-success" @click.prevent="goToUpdateCredentials">Continuar</b-button>
              <b-button type="is-warning">Cambiar</b-button>
           </div>
 
@@ -45,15 +45,20 @@ export default {
   data(){
     return{
       platforms: [],
-      group: null,
+      group: "",
       groupId: null
     }
   },
   async mounted(){
-    this.groupId = this.$route.params.slug
+    this.groupId = this.$route.params.id
     const group = await GroupsRef.doc(this.groupId).get()
     this.group = group.data()
   },
+  methods:{
+    goToUpdateCredentials(){
+      this.$router.push('/update-credentials')
+    }
+  }
 }
 </script>
 

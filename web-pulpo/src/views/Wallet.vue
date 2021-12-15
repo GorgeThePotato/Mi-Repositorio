@@ -64,7 +64,28 @@
       </template>
     </b-navbar>
 
-  
+    <div class="tile is-ancestor">
+      <div class="tile is-vertical is-8">
+        <div class="tile">
+          <div class="tile is-parent is-vertical">
+            <article class="tile is-child notification is-info">
+              <p class="title">Saldo disponible</p>
+              <p class="subtitle">0,00€</p>
+            </article>
+            <article class="tile is-child notification is-info">
+              <p class="title">Próximos pagos...</p>
+              <p class="subtitle">0,00€</p>
+            </article>
+          </div>
+          <div class="tile is-parent">
+            <article class="tile is-child notification is-info">
+              <p class="title">Transacciones</p>
+              <p class="subtitle">Aún no tienes transacciones D:</p>
+            </article>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -172,6 +193,11 @@ h1{
 
 .navbar-item img {
     max-height: 4.75rem;
+}
+
+.tile{
+  justify-content: center;
+  margin-top: 10px;
 }
 
 </style>
