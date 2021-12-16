@@ -12,18 +12,18 @@
     </b-navbar>
     <div class="columns" style="justify-content: center">
         <div class="column is-half" >
-            <h1 class="is-size-3" style="padding: 10px"><b>¿Con cuánta gente quieres compartir tu cuenta de?</b></h1>
+            <h1 class="is-size-3" style="padding: 10px"><b>Añade los credenciales de tu cuenta de {{this.group.platform}}</b></h1>
         
           <div class="content" style="padding: 10px">
               <h3>Las credenciales serán verificadas y encriptadas de forma segura. Solamente los miembros de tu grupo tendrán acceso a ellas.</h3>
           </div>
           <section>
-            <b-field label="Usuario de">
+            <b-field label="Usuario">
               <b-input v-model="credentialsData.username">
               </b-input>
             </b-field>
 
-            <b-field label="Contraseña de">
+            <b-field label="Contraseña">
               <b-input type="password"  id="password" required v-model="credentialsData.password">
               </b-input>
             </b-field>
@@ -62,7 +62,7 @@
 
 <script>
 
-import {ServiceRef} from '@/modules/firebase'
+import {ServiceRef, GroupsRef} from '@/modules/firebase'
 import firebase from 'firebase/app'
 import "firebase/auth"
 
@@ -76,8 +76,15 @@ export default {
       password: "",
       confirm_password:"",
       isChecked: false
-      }
+      },
+      group:"",
+      groupId: null
     }
+  },
+  async mounted(){
+    this.groupId = this.$route.params.id
+    const group = await GroupsRef.doc(this.groupId).get()
+    this.group = group.data()
   },
   firestore(){
     return{
@@ -103,16 +110,14 @@ export default {
       }
 
       if(this.credentialsData.password == this.credentialsData.confirm_password && this.credentialsData.isChecked){
-      const accountInfo = {
+
+      const updateGroupInfo = GroupsRef.doc(this.groupId).set({
         username: this.credentialsData.username,
         password: this.credentialsData.password,
-        created_at: new Date(),
-        userId: uid,
-        userEmail: email
-      };
-      const result = await ServiceRef.add(accountInfo)
+        created_at: new Date()},
+        {merge: true});
 
-      this.$router.push('/my-groups')
+      this.$router.push('/')
       }
     }
     }

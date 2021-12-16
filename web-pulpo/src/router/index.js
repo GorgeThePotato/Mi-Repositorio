@@ -33,7 +33,7 @@ const routes = [
   {path: '/select-platform', name: 'Select_platform', component: SelectPlatform},
   {path: '/update-slots/:slug', name: 'Update_slots', component: UpdateSlots},
   {path: '/update-price/:id', name: 'Update_price', component: UpdatePrice},
-  {path: '/update-credentials', name: 'Update_credentials', component: UpdateCredentials},
+  {path: '/update-credentials/:id', name: 'Update_credentials', component: UpdateCredentials},
   {path: '/register', name: 'Register', component: Register},
   {path: '/email-signup', name: 'Email_signup', component: EmailSignup},
   {path: '/login', name: 'Login', component: Login},

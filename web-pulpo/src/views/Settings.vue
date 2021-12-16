@@ -71,21 +71,21 @@
           <b-table>
             <tr>           
               <td><b>Nombre</b></td>
-              <td>Jorge</td>
+              <td></td>
               <td><b-button rounded size="is-small">Editar</b-button></td>
             </tr>
             <tr>
               <td><b>Apellido</b></td>
-              <td>Rodríguez Pérez</td>
+              <td></td>
               <td><b-button rounded size="is-small">Editar</b-button></td>
             </tr>
             <tr>
               <td><b>Email</b></td>
-              <td>perez.jorge.rodriguez@gmail.com</td>
+              <td></td>
             </tr>
             <tr>
               <td><b>Contraseña</b></td>
-              <td>holahola122</td>
+              <td></td>
               <td><b-button rounded size="is-small">Editar</b-button></td>
             </tr>
           </b-table>
@@ -127,10 +127,11 @@ export default {
     },
     }
   },
-   mounted() {
+  async mounted() {
     Auth.onAuthStateChanged((user) => {
       
       this.hasSession = (user !== null)
+      
 
       if(this.hasSession && this.$route.name === 'login' ||
       this.$route.name === 'register' ||
@@ -141,12 +142,7 @@ export default {
           console.error(e.message)
         }
       }
-    });
-  },
-  firestore(){
-    return{
-    users: UsersRef
-    }
+    })
   },
   methods:{
     goToQuestionsPage(){

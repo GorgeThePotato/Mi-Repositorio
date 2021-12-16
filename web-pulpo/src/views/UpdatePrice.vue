@@ -55,8 +55,15 @@ export default {
     this.group = group.data()
   },
   methods:{
-    goToUpdateCredentials(){
-      this.$router.push('/update-credentials')
+     async goToUpdateCredentials(){
+      const user = firebase.auth().currentUser;
+      if(user !== null){
+        this.groupId = this.$route.params.id
+        const group = await GroupsRef.doc(this.groupId).get()
+        this.group = group.data()
+      
+      this.$router.push({ name: 'Update_credentials', params: { id: group.id} })
+      }
     }
   }
 }
