@@ -19,9 +19,6 @@
         <b-navbar-item v-if="hasSession" @click.prevent="goToMyGroupsPage">
           Mis grupos
         </b-navbar-item>
-        <b-navbar-item v-if="hasSession" @click.prevent="goToDashboardPage">
-          Compartir
-        </b-navbar-item>
         <b-navbar-item v-if="hasSession">
           <a class="button is-light" v-if="hasSession" @click.prevent="goToCreateGroupPage">
             Crear grupo
@@ -52,9 +49,6 @@
               <a class="button is-light" v-if="hasSession" @click="goToQuestionsPage">
                 Ayuda
               </a>
-              <a class="button is-light" v-if="hasSession" @click="goToQuestionsPage">
-                FAQ
-              </a>
               <a class="button is-light" v-if="hasSession" @click.prevent="closeSession">
                 Cerrar Sesión
               </a>
@@ -71,22 +65,20 @@
           <b-table>
             <tr>           
               <td><b>Nombre</b></td>
-              <td></td>
-              <td><b-button rounded size="is-small">Editar</b-button></td>
+              <td>{{this.user.name}}</td>
             </tr>
             <tr>
               <td><b>Apellido</b></td>
-              <td></td>
-              <td><b-button rounded size="is-small">Editar</b-button></td>
+              <td>{{this.user.surname}}</td>
             </tr>
             <tr>
               <td><b>Email</b></td>
-              <td></td>
+              <td>{{this.user.email}}</td>
             </tr>
             <tr>
               <td><b>Contraseña</b></td>
-              <td></td>
-              <td><b-button rounded size="is-small">Editar</b-button></td>
+              <td>{{this.user.password}}</td>
+              <b-button rounded size="is-small">Mostrar</b-button>
             </tr>
           </b-table>
         </div>
@@ -118,21 +110,22 @@ import firebase from 'firebase/app'
 import "firebase/auth"
 
 export default {
-  name: "Header",
+  name: "Settings",
   data() {
     return{
     hasSession: {
       type: Boolean,
       default: false
     },
+    user: "",
+    userUid: null,
     }
   },
   async mounted() {
     Auth.onAuthStateChanged((user) => {
       
       this.hasSession = (user !== null)
-      
-
+ 
       if(this.hasSession && this.$route.name === 'login' ||
       this.$route.name === 'register' ||
       this.$route.name === 'reset_password'){
@@ -143,11 +136,11 @@ export default {
         }
       }
     })
+    this.userUid = this.$route.params.id
+    const user = await UsersRef.doc(this.userUid).get()
+    this.user = user.data()
   },
   methods:{
-    goToQuestionsPage(){
-      this.$router.push("/faq")
-    },
     goToCreateGroupPage(){
       this.$router.push("/create-group")
     },
@@ -157,23 +150,39 @@ export default {
      goToLoginPage(){
       this.$router.push("/login")
     },
-    goToSettings(){
-      this.$router.push("/settings")
+    async goToSettings(){
+      const user = firebase.auth().currentUser;
+      if(user !== null){
+      this.$router.push({ name: 'Settings', params: { id: user.uid} })
+      }
     },
-    goToWallet(){
-      this.$router.push("/wallet")
+    async goToWallet(){
+      const user = firebase.auth().currentUser;
+      if(user !== null){
+      this.$router.push({ name: 'Wallet', params: { id: user.uid} })
+      }
     },
     goToQuestionsPage() {
       this.$router.push("/faq");
     },
-     goToDashboardPage() {
-      this.$router.push("/dashboard");
-    },
-     goToMyGroupsPage() {
-      this.$router.push("/my-groups");
+     async goToMyGroupsPage() {
+      const user = firebase.auth().currentUser;
+      if(user !== null){
+      this.$router.push({ name: 'My_groups', params: { id: user.uid} })
+      }
     },
     goToCreateGroupPage(){
       this.$router.push("/create-group")
+    },
+     async closeSession() {
+      try {
+        await Auth.signOut();
+        
+        this.$router.push("/").catch(()=>{});
+        
+      } catch (e) {
+        console.error(e.message);
+      }
     },
      async closeSession() {
       try {

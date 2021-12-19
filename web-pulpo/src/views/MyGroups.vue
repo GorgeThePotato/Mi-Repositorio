@@ -19,9 +19,6 @@
         <b-navbar-item v-if="hasSession" @click.prevent="goToMyGroupsPage">
           Mis grupos
         </b-navbar-item>
-        <b-navbar-item v-if="hasSession" @click.prevent="goToDashboardPage">
-          Compartir
-        </b-navbar-item>
         <b-navbar-item v-if="hasSession">
           <a class="button is-light" v-if="hasSession" @click.prevent="goToCreateGroupPage">
             Crear grupo
@@ -51,9 +48,6 @@
               </a>
               <a class="button is-light" v-if="hasSession" @click="goToQuestionsPage">
                 Ayuda
-              </a>
-              <a class="button is-light" v-if="hasSession" @click="goToQuestionsPage">
-                FAQ
               </a>
               <a class="button is-light" v-if="hasSession" @click.prevent="closeSession">
               Cerrar Sesión
@@ -193,12 +187,6 @@ export default {
     },
     goToWallet(){
       this.$router.push("/wallet")
-    },
-    goToQuestionsPage() {
-      this.$router.push("/faq");
-    },
-     goToDashboardPage() {
-      this.$router.push("/dashboard");
     },
      goToMyGroupsPage() {
       this.$router.push("/my-groups");

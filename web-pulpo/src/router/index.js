@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
-import Groups from '../views/Groups.vue'
 import Questions from '../views/Questions.vue'
 import CreateGroup from '../views/CreateGroup.vue'
 import Register from '../views/Register.vue'
@@ -27,7 +26,6 @@ Vue.use(VueRouter)
 
 const routes = [
   {path: '/', name: 'Home', component: Home},
-  {path: '/dashboard', name: 'Groups', component: Groups},
   {path: '/faq', name: 'FAQ', component: Questions},
   {path: '/create-group', name: 'Create_group', component: CreateGroup},
   {path: '/select-platform', name: 'Select_platform', component: SelectPlatform},
@@ -43,9 +41,9 @@ const routes = [
   {path: '/terms', name: 'Terms', component: Terms},
   {path: '/privacy-policy', name: 'Privacy_policy', component: PrivacyPolicy},
   {path: '/contact', name: 'Contact', component: Contact},
-  {path: '/settings', name: 'Settings', component: Settings},
-  {path: '/wallet', name: 'Wallet', component: Wallet},
-  {path: '/my-groups', name: 'My_groups', component: MyGroups},
+  {path: '/settings/:id', name: 'Settings', component: Settings},
+  {path: '/wallet/:id', name: 'Wallet', component: Wallet},
+  {path: '/my-groups/:id', name: 'My_groups', component: MyGroups},
   {path: '/referrals', name: 'Referrals', component: Referrals},
   
 ]

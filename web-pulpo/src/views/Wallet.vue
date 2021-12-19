@@ -19,9 +19,6 @@
         <b-navbar-item v-if="hasSession" @click.prevent="goToMyGroupsPage">
           Mis grupos
         </b-navbar-item>
-        <b-navbar-item v-if="hasSession" @click.prevent="goToDashboardPage">
-          Compartir
-        </b-navbar-item>
         <b-navbar-item v-if="hasSession">
           <a class="button is-light" v-if="hasSession" @click.prevent="goToCreateGroupPage">
             Crear grupo
@@ -51,9 +48,6 @@
               </a>
               <a class="button is-light" v-if="hasSession" @click="goToQuestionsPage">
                 Ayuda
-              </a>
-              <a class="button is-light" v-if="hasSession" @click="goToQuestionsPage">
-                FAQ
               </a>
               <a class="button is-light" v-if="hasSession" @click.prevent="closeSession">
                 Cerrar Sesión
@@ -92,6 +86,10 @@
 
 <script>
 
+import {Auth, UsersRef} from '@/modules/firebase';
+import firebase from 'firebase/app'
+import "firebase/auth"
+
 export default {
   name: "Header",
   data() {
@@ -124,9 +122,6 @@ export default {
     }
   },
   methods:{
-    goToQuestionsPage(){
-      this.$router.push("/faq")
-    },
     goToCreateGroupPage(){
       this.$router.push("/create-group")
     },
@@ -136,20 +131,32 @@ export default {
      goToLoginPage(){
       this.$router.push("/login")
     },
-    goToSettings(){
-      this.$router.push("/settings")
+    async goToSettings(){
+      const user = firebase.auth().currentUser;
+      if(user !== null){
+  
+
+      this.$router.push({ name: 'Settings', params: { id: user.uid} })
+      }
     },
-    goToWallet(){
-      this.$router.push("/wallet")
+    async goToWallet(){
+      const user = firebase.auth().currentUser;
+      if(user !== null){
+
+
+      this.$router.push({ name: 'Wallet', params: { id: user.uid} })
+      }
     },
     goToQuestionsPage() {
       this.$router.push("/faq");
     },
-     goToDashboardPage() {
-      this.$router.push("/dashboard");
-    },
-     goToMyGroupsPage() {
-      this.$router.push("/my-groups");
+     async goToMyGroupsPage() {
+      const user = firebase.auth().currentUser;
+      if(user !== null){
+
+
+      this.$router.push({ name: 'My_groups', params: { id: user.uid} })
+      }
     },
     goToCreateGroupPage(){
       this.$router.push("/create-group")
